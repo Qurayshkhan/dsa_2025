@@ -2,16 +2,14 @@ class Node {
     constructor(data) {
         this.data = data;
         this.next = null;
-        this.prev = null;
     }
 }
-const insertAtFirst = (head, data) => {
-    const ptr = new Node(data);
-    let p = head;
 
+const insertAtFirst = (head, data) => {
+    let ptr = new Node(data);
+    let p = head;
     ptr.next = p;
     return ptr;
-
 }
 
 const insertAtIndex = (head, index, data) => {
@@ -20,22 +18,11 @@ const insertAtIndex = (head, index, data) => {
     let i = 0;
     while (p && i < index - 1) {
         p = p.next;
-        i++
+        i++;
     }
     ptr.next = p.next;
     p.next = ptr;
-
     return head;
-}
-
-const insertAfterNode = (head, prev, data) => {
-    let ptr = new Node(data);
-
-    ptr.next = prev.next;
-    prev.next = ptr;
-
-    return head;
-
 }
 
 const insertAtEnd = (head, data) => {
@@ -46,6 +33,15 @@ const insertAtEnd = (head, data) => {
     }
     p.next = ptr;
     ptr.next = null;
+    return head;
+}
+
+const insertAfterNode = (head, prev, data) => {
+    let ptr = new Node(data);
+    let p = head;
+
+    ptr.next = prev.next;
+    prev.next = ptr;
     return head;
 }
 
@@ -64,37 +60,40 @@ const deleteAtIndex = (head, index) => {
         i++;
     }
     p.next = q.next;
-    q = null;
     return head;
 }
 
 const deleteAtEnd = (head) => {
     let p = head;
     let q = head.next;
-    while (q.next != null) {
+    while (q && q.next != null) {
         p = p.next;
         q = q.next;
     }
     p.next = q.next;
     return head;
 }
-const deleteBasedValue = (head, value) => {
+
+const deleteAtValue = (head, value) => {
     let p = head;
     let q = head.next;
-    while (q && q.next != null && q.data != value) {
+    while (q && q.data != value && q.next != null) {
         p = p.next;
         q = q.next;
     }
-    if (q.data == value && q.next != null) {
+    if (q && q.data == value) {
         p.next = q.next;
     }
     return head;
 }
-const printLinkedList = (currentNode) => {
-    while (currentNode) {
-        console.log(currentNode.data);
-        currentNode = currentNode.next;
+
+const printLinkedList = (head) => {
+    let current = head;
+    while (current) {
+        console.log(current.data + '->');
+        current = current.next;
     }
+    return current;
 }
 
 let head = new Node(10);
@@ -109,26 +108,16 @@ n2.next = n3;
 n3.next = n4;
 n4.next = null;
 
-
 // head = insertAtFirst(head, 5);
-// head = insertAtIndex(head, 3, 25);
-// head = insertAfterNode(head, n2, 25);
-// head = insertAtEnd(head, 25);
+// head = insertAtIndex(head, 2, 5);
+// head = insertAtEnd(head, 2);
+// head = insertAfterNode(head, n1, 2);
 
 // head = deleteAtFirst(head);
 // head = deleteAtIndex(head, 3);
 // head = deleteAtEnd(head);
-// head = deleteBasedValue(head, 30);
-
-
-let currentNode = head;
-printLinkedList(currentNode);
+// head = deleteAtValue(head, 30);
 
 
 
-
-
-
-
-
-
+console.log(printLinkedList(head));

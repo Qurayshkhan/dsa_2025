@@ -1,11 +1,16 @@
 class Stack {
-    constructor() {
+    constructor(size) {
         this.top = -1;
-        this.size = null;
-        this.arr = [];
+        this.size = size;
+        this.arr = new Array(size - 1);
     }
 }
-
+const isFull = (stack) => {
+    if (stack.top == stack.size - 1) {
+        return 1;
+    }
+    return 0;
+}
 const isEmpty = (stack) => {
     if (stack.top == -1) {
         return 1;
@@ -13,58 +18,45 @@ const isEmpty = (stack) => {
         return 0;
     }
 }
-
-const isFull = (stack) => {
-    if (stack.top == stack.size - 1) {
-        return 1
-    } else {
-        return 0;
-    }
-}
-
-const push = (stack, data) => {
+const push = (stack, value) => {
     if (isFull(stack)) {
         console.log("Stack is Full");
     } else {
         stack.top++;
-        stack.arr[stack.top] = data;
+        stack.arr[stack.top] = value;
     }
-    return data;
 }
+
 const pop = (stack) => {
     if (isEmpty(stack)) {
-        console.log("Stack is Empty");
+        console.log("Stack is empty");
     } else {
         let val = stack.arr[stack.top];
         stack.top--;
-        return val;
+        return stack.arr;
     }
 }
+
 const peek = (stack) => {
-    let idx = stack.top - i + 1;
-    if (idx < 0) {
-        return -1;
-    } else {
-        return stack.arr[idx];
-    }
+    let idx = stack.top;
+    return stack.arr[idx];
 }
-const stack = new Stack();
-stack.size = 5;
-stack.arr = new Array(stack.size - 1);
 
-push(stack, 6);
+const stack = new Stack(5);
 push(stack, 10);
-push(stack, 7);
-push(stack, 3);
-push(stack, 2);
+push(stack, 20);
+push(stack, 30);
+push(stack, 40);
+push(stack, 60);
+push(stack, 70);
 
+// pop(stack);
+// pop(stack);
+// pop(stack);
+// pop(stack);
+// pop(stack);
+// pop(stack);
+// pop(stack);
+console.log(peek(stack));
 
-pop(stack);
-pop(stack);
-pop(stack);
-
-
-for (i = 1; i <= stack.top + 1; i++) {
-    console.log("Value at index " + i + " ", peek(stack, i));
-}
-
+console.log(stack);

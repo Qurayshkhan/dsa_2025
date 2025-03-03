@@ -7,7 +7,7 @@ class Node {
 
 class Stack {
     constructor() {
-        this.top = null; // now the top is like a head;
+        this.top = null;
     }
 
     isEmpty = () => {

@@ -7,9 +7,9 @@ const bubbleSort = (arr, n) => {
         let swap = false;
         for (let j = 0; j <= n - i - 1; j++) {
             if (arr[j] > arr[j + 1]) {
-                let temp = arr[j + 1];
-                arr[j + 1] = arr[j];
-                arr[j] = temp;
+                let temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
                 swap = true;
             }
         }
@@ -19,26 +19,30 @@ const bubbleSort = (arr, n) => {
     }
     return arr;
 }
+
 // console.log(bubbleSort(my_array, n));
+
 const selectionSort = (arr, n) => {
     for (let i = 0; i <= n - 1; i++) {
-        let minIndex = i;
+        let min = i;
         for (let j = i + 1; j <= n - 1; j++) {
-            if (arr[j] < arr[minIndex]) {
-                minIndex = j;
+            if (arr[j] < arr[min]) {
+                min = j;
             }
         }
-        if (minIndex != i) {
-            let temp = arr[minIndex];
-            arr[minIndex] = arr[i];
+        if (min != i) {
+            let temp = arr[min];
+            arr[min] = arr[i];
             arr[i] = temp;
         }
     }
     return arr;
 }
+
 // console.log(selectionSort(my_array, n));
+
 const insertionSort = (arr, n) => {
-    for (let i = 1; i <= n - 1; i++) {
+    for (let i = 0; i <= n - 1; i++) {
         let key = arr[i];
         let j = i - 1;
         while (arr[j] > key) {
@@ -50,6 +54,7 @@ const insertionSort = (arr, n) => {
     return arr;
 }
 // console.log(insertionSort(my_array, n));
+
 const quickSort = (arr, low, high) => {
     if (low < high) {
         let partitionIndex = partition(arr, low, high);
@@ -58,16 +63,17 @@ const quickSort = (arr, low, high) => {
     }
     return arr;
 }
+
 const partition = (arr, low, high) => {
     let pivot = arr[low];
     let i = low + 1;
     let j = high;
     let temp;
     do {
-        if (arr[i] <= pivot) {
+        while (arr[i] <= pivot) {
             i++;
         }
-        if (arr[j] > pivot) {
+        while (arr[j] > pivot) {
             j--;
         }
         if (i < j) {
@@ -76,13 +82,14 @@ const partition = (arr, low, high) => {
             arr[j] = temp;
         }
     } while (i < j);
-
     temp = arr[low];
     arr[low] = arr[j];
     arr[j] = temp;
     return j;
 }
+
 // console.log(quickSort(my_array, 0, n - 1));
+
 const maxNumber = (arr, n) => {
     let max = 0;
     for (let i = 0; i <= n - 1; i++) {
@@ -98,8 +105,8 @@ const countSort = (arr, n) => {
     for (let i = 0; i <= max; i++) {
         count[i] = 0;
     }
-    for (let i = 0; i <= n - 1; i++) {
-        count[arr[i]] = count[arr[i]] + 1;
+    for (let j = 0; j <= n - 1; j++) {
+        count[arr[j]] = count[arr[j]] + 1;
     }
     let i = 0;
     let j = 0;
@@ -114,7 +121,9 @@ const countSort = (arr, n) => {
     }
     return arr;
 }
+
 // console.log(countSort(my_array, n));
+
 const mergeSort = (arr, low, high) => {
     if (low < high) {
         let mid = Math.floor((low + high) / 2);
@@ -124,6 +133,7 @@ const mergeSort = (arr, low, high) => {
     }
     return arr;
 }
+
 const merge = (arr, low, mid, high) => {
     let i = low;
     let j = mid + 1;
@@ -132,13 +142,12 @@ const merge = (arr, low, mid, high) => {
     while (i <= mid && j <= high) {
         if (arr[i] <= arr[j]) {
             brr[k] = arr[i];
-            i++
-            k++
+            i++;
         } else {
             brr[k] = arr[j];
-            j++
-            k++;
+            j++;
         }
+        k++;
     }
     while (i <= mid) {
         brr[k] = arr[i];
@@ -154,40 +163,16 @@ const merge = (arr, low, mid, high) => {
         arr[i] = brr[i];
     }
 }
+
 // console.log(mergeSort(my_array, 0, n - 1));
-const insertInArray = (arr, n, index, element) => {
-    for (let i = n - 1; i >= index; i--) {
-        arr[i + 1] = arr[i];
-    }
-    arr[index] = element;
-    return arr;
-}
-// console.log(insertInArray(my_array, n, 3, 222));
-const deleteInArray = (arr, n, index) => {
-    for (let i = index; i <= n - 1; i++) {
-        arr[i] = arr[i + 1];
-    }
-    arr.length = n - 1;
-    return arr;
-}
-// console.log(deleteInArray(my_array, n, 3));
-const linearSearch = (arr, n, element) => {
-    for (let i = 0; i <= n - 1; i++) {
-        if (arr[i] == element) {
-            return i;
-        }
-    }
-    return -1;
-}
-// console.log(linearSearch(my_array, n, 90));
+
 const binarySearch = (arr, n, element) => {
     arr = mergeSort(arr, 0, n - 1);
     let low = 0;
     let high = n - 1;
-    let mid;
     while (low <= high) {
-        mid = Math.floor((low + high) / 2);
-        if (arr[mid] === element) {
+        let mid = Math.floor((low + high) / 2);
+        if (arr[mid] == element) {
             return mid;
         }
         if (arr[mid] < element) {
@@ -196,12 +181,25 @@ const binarySearch = (arr, n, element) => {
             high = mid - 1;
         }
     }
+    return arr;
+}
+
+// console.log(binarySearch(my_array, n, 90));
+
+const linearSearch = (arr, n, element) => {
+    for (let i = 0; i <= n - 1; i++) {
+        if (arr[i] == element) {
+            return i;
+        }
+    }
     return -1;
 }
-// console.log(binarySearch(my_array, n, 90));
+
+// console.log(linearSearch(my_array, n, 93));
+
 const removeDuplicate = (arr, n) => {
-    let index = 0;
     let newArr = [];
+    let index = 0;
     for (let i = 0; i <= n - 1; i++) {
         let item = linearSearch(arr, n, arr[i]);
         if (item === i) {
@@ -212,25 +210,28 @@ const removeDuplicate = (arr, n) => {
     return newArr;
 }
 // console.log(removeDuplicate(my_array, n));
-const capitalLetter = (string) => {
-    let str = string.toLowerCase();
+
+const capitalLetters = (str) => {
+    let string = str.toLowerCase();
     let newArr = [];
-    for (let i = 0; i <= str.length - 1; i++) {
+    for (let i = 0; i <= string.length - 1; i++) {
         let letters = "";
-        for (let j = 0; j <= str.length - 1; j++) {
-            if (i === j) {
-                letters += str[j].toUpperCase();
+        for (let j = 0; j <= string.length - 1; j++) {
+            if (i == j) {
+                letters += string[j].toUpperCase();
             } else {
-                letters += str[j];
+                letters += string[j];
             }
         }
         newArr[i] = letters;
     }
     return newArr;
 }
-// console.log(capitalLetter(str));
-const maxThreeNumber = (arr, n) => {
-    let first = -Infinity, second = -Infinity, third = -Infinity;
+
+// console.log(capitalLetters(str));
+
+const threeLargest = (arr, n) => {
+    let first = -Infinity, second = -Infinity; third = -Infinity;
     for (num of arr) {
         if (num > first) {
             third = second;
@@ -240,17 +241,31 @@ const maxThreeNumber = (arr, n) => {
             third = second;
             second = num;
         } else if (num > third) {
-            third = num;
+            third = second;
         }
     }
     return [first, second, third];
 }
-// console.log(maxThreeNumber(my_array, n));
 
+// console.log(threeLargest(my_array, n));
 
+const deleteInArray = (arr, n, index) => {
+    for (let i = index; i <= n - 1; i++) {
+        arr[i] = arr[i + 1];
+    }
+    arr.length = n - 1;
+    return arr;
+}
 
-
-
+// console.log(deleteInArray(my_array, n, 4));
+const insertInArray = (arr, n, index, element) => {
+    for (let i = n - 1; i >= index; i--) {
+        arr[i + 1] = arr[i];
+    }
+    arr[index] = element;
+    return arr;
+}
+// console.log(insertInArray(my_array, n, 3, 15));
 
 
 
