@@ -35,11 +35,11 @@ const inOrderTraversal = (root) => {
     }
 }
 
-let p = createNode(4);
-let p1 = createNode(1);
+let p = createNode(5);
+let p1 = createNode(3);
 let p2 = createNode(6);
-let p3 = createNode(5);
-let p4 = createNode(2);
+let p3 = createNode(1);
+let p4 = createNode(4);
 
 p.left = p1;
 p.right = p2;
@@ -48,4 +48,4 @@ p1.right = p4;
 
 // preOrderTraversal(p);
 // postOrderTraversal(p);
-inOrderTraversal(p);
+// inOrderTraversal(p);
