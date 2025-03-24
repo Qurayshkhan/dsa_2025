@@ -36,7 +36,7 @@ const inOrderTraversal = (root) => {
 }
 
 const search = (root, value) => {
-    if (root == null) {
+    if (value == null) {
         return null;
     }
     if (value == root.data) {
@@ -63,13 +63,17 @@ const iterativeSearch = (root, value) => {
 
 const insertNodeInBST = (root, key) => {
     let prev = null;
-    let newNode;
+    let newNode = null;
+    if (root == null) {
+        return null;
+    }
     while (root != null) {
         prev = root;
         if (key === root.data) {
-            console.log("Duplicate value not allowed");
+            console.log("No duplicate values allowed.");
             return;
-        } else if (key < root.data) {
+        }
+        if (key < root.data) {
             root = root.left;
         } else {
             root = root.right;
@@ -84,20 +88,21 @@ const insertNodeInBST = (root, key) => {
 }
 
 const deletionInBST = (root, value) => {
+    let iPre;
     if (root == null) {
         return null;
     }
     if (value < root.data) {
         root.left = deletionInBST(root.left, value);
     } else if (value > root.data) {
-        root.data = deletionInBST(root.data, value);
+        root.right = deletionInBST(root.right, value);
     } else {
         if (root.left == null) {
             return root.right;
         } else if (root.right == null) {
             return root.left;
         }
-        let iPre = inOrderPredecessor(root);
+        iPre = inOrderPredecessor(root);
         root.data = iPre.data;
         root.left = deletionInBST(root.left, iPre.data);
     }
@@ -136,12 +141,12 @@ p2.right = p6;
 
 
 // insertNodeInBST(p, 52);
-deletionInBST(p, 40);
+// deletionInBST(p, 40);
 // preOrderTraversal(p);
 // postOrderTraversal(p);
 inOrderTraversal(p);
 
-// const n = search(p, 55);
+// const n = search(p, 52);
 // const n = iterativeSearch(p, 55);
 // if (n) {
 //     console.log("value found " + n.data);

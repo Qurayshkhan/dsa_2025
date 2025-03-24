@@ -1,57 +1,58 @@
 class Queue {
     constructor(size) {
         this.size = size;
-        this.f = -1;
         this.r = -1;
-        this.arr = new Array(size);
+        this.f = -1;
+        this.arr = new Array(size - 1);
     }
     isFull() {
-        if (this.r == this.size - 1) {
+        if (this.r == this.size) {
             return 1;
+        } else {
+            return 0;
         }
-        return 0;
     }
     isEmpty() {
-        if (this.f === this.r) {
+        if (this.f == this.r) {
             return 1;
+        } else {
+            return 0;
         }
-        return 0;
     }
     enqueue(value) {
         if (this.isFull()) {
-            console.log("Queue is full");
+            console.log("Queue is Full");
             return;
         } else {
             this.r++;
-            this.arr[this.r] = value;
+            return this.arr[this.r] = value;
         }
     }
     dequeue() {
         if (this.isEmpty()) {
-            console.log("Queue is empty");
+            console.log("Queue is Empty");
             return;
         } else {
             this.f++;
             return this.arr[this.f];
+
         }
     }
+
 }
 
-const q = new Queue(100);
+const q = new Queue(5);
 q.enqueue(10);
-q.enqueue(15);
-q.enqueue(20);
-q.enqueue(25);
-q.enqueue(30);
+q.enqueue(5);
+q.enqueue(8);
+q.enqueue(9.3);
+q.enqueue(11);
+q.enqueue(12);
 
-console.log(q.dequeue());
-console.log(q.dequeue());
-console.log(q.dequeue());
-console.log(q.dequeue());
-console.log(q.dequeue());
-console.log(q.dequeue());
-console.log(q.dequeue());
+q.dequeue();
+q.dequeue();
 
-console.log(q.arr);
+console.log(q);
+
 
 
