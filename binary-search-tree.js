@@ -54,7 +54,7 @@ const insertNodeInBST = (root, key) => {
         }
     }
     newNode = createNode(key);
-    if (key < prev.left) {
+    if (key < prev.value) {
         prev.left = newNode;
     } else {
         prev.right = newNode;
