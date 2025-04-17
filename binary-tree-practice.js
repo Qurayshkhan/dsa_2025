@@ -18,15 +18,13 @@ const preOrderTraversal = (root) => {
         preOrderTraversal(root.right);
     }
 }
-
 const postOrderTraversal = (root) => {
     if (root != null) {
-        postOrderTraversal(root.left);
-        postOrderTraversal(root.right);
+        preOrderTraversal(root.left);
+        preOrderTraversal(root.right);
         console.log(root.data);
     }
 }
-
 const inOrderTraversal = (root) => {
     if (root != null) {
         inOrderTraversal(root.left);
@@ -35,45 +33,28 @@ const inOrderTraversal = (root) => {
     }
 }
 
-const search = (root, value) => {
-    if (value == null) {
+const search = (root, key) => {
+    if (root == null) {
         return null;
     }
-    if (value == root.data) {
+    if (key == root.data) {
         return root;
-    } else if (value < root.data) {
-        return search(root.left, value);
+    } else if (key < root.data) {
+        return search(root.left, key);
     } else {
-        return search(root.right, value);
+        return search(root.right, key);
     }
-}
-
-const iterativeSearch = (root, value) => {
-    while (root != null) {
-        if (value == root.data) {
-            return root;
-        } else if (value < root.data) {
-            return root.left;
-        } else {
-            return root.right;
-        }
-    }
-    return null;
 }
 
 const insertNodeInBST = (root, key) => {
     let prev = null;
-    let newNode = null;
-    if (root == null) {
-        return null;
-    }
+    let newNode;
     while (root != null) {
         prev = root;
-        if (key === root.data) {
-            console.log("No duplicate values allowed.");
+        if (key == root.data) {
+            console.log("Duplicate node not allowed");
             return;
-        }
-        if (key < root.data) {
+        } else if (key < root.data) {
             root = root.left;
         } else {
             root = root.right;
@@ -85,74 +66,58 @@ const insertNodeInBST = (root, key) => {
     } else {
         prev.right = newNode;
     }
+    return root;
 }
 
-const deletionInBST = (root, value) => {
+const deletionNode = (root, key) => {
     let iPre;
     if (root == null) {
         return null;
     }
-    if (value < root.data) {
-        root.left = deletionInBST(root.left, value);
-    } else if (value > root.data) {
-        root.right = deletionInBST(root.right, value);
+    if (key < root.data) {
+        root.left = deletionNode(root.left, key);
+    } else if (key > root.data) {
+        root.right = deletionNode(root.right, key);
     } else {
         if (root.left == null) {
             return root.right;
         } else if (root.right == null) {
             return root.left;
+        } else {
+            iPre = inOrderPredecessor(root);
+            root.data = iPre.data;
+            root.left = deletionNode(root.left, iPre.data);
         }
-        iPre = inOrderPredecessor(root);
-        root.data = iPre.data;
-        root.left = deletionInBST(root.left, iPre.data);
     }
     return root;
-};
-
+}
 const inOrderPredecessor = (root) => {
     let temp = root.left;
     while (root.right != null) {
         temp = root.right;
     }
     return temp;
-};
+}
+
+const n1 = createNode(40);
+const n2 = createNode(30);
+const n3 = createNode(50);
+const n4 = createNode(25);
+const n5 = createNode(35);
 
 
-let p = createNode(50);
+n1.left = n2;
+n1.right = n3;
 
-let p1 = createNode(45);
+n2.left = n4;
+n2.right = n5;
 
-let p2 = createNode(55);
-
-let p3 = createNode(40);
-let p4 = createNode(60);
-
-let p5 = createNode(51);
-let p6 = createNode(57);
-
-p.left = p1;
-p.right = p2;
-
-p1.left = p3;
-p1.right = p4;
-
-p2.left = p5
-p2.right = p6;
-
-
-// insertNodeInBST(p, 52);
-// deletionInBST(p, 40);
-// preOrderTraversal(p);
-// postOrderTraversal(p);
-inOrderTraversal(p);
-
-// const n = search(p, 52);
-// const n = iterativeSearch(p, 55);
-// if (n) {
-//     console.log("value found " + n.data);
-// } else {
-//     console.log("Element not found");
-// }
+// console.log(postOrderTraversal(n1));
+// console.log(inOrderTraversal(n1));
+// console.log(search(n1, 50));
+// insertNodeInBST(n1, 33);
+deletionNode(n1, 50);
+console.log(preOrderTraversal(n1));
 
 
 

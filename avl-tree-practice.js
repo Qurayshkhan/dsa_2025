@@ -7,8 +7,8 @@ class Node {
     }
 }
 
-const createNode = (key) => {
-    const node = new Node(key);
+const createNode = (data) => {
+    const node = new Node(data);
     return node;
 }
 
@@ -22,7 +22,6 @@ const getHeight = (node) => {
     }
     return node.height;
 }
-
 const getBalanceFactor = (node) => {
     if (node == null) {
         return 0;
@@ -31,7 +30,6 @@ const getBalanceFactor = (node) => {
 }
 
 const rightRotate = (y) => {
-
     const x = y.left;
     const T2 = x.right;
 
@@ -44,7 +42,6 @@ const rightRotate = (y) => {
     return x;
 }
 
-
 const leftRotate = (x) => {
 
     const y = x.right;
@@ -53,23 +50,29 @@ const leftRotate = (x) => {
     y.left = x;
     x.right = T2;
 
-    x.height = max(getHeight(x.right), getHeight(x.left)) + 1;
+
     y.height = max(getHeight(y.right), getHeight(y.left)) + 1;
+    x.height = max(getHeight(x.right), getHeight(x.left)) + 1;
 
     return y;
+
 }
 
 const insert = (node, key) => {
-    if (node === null) {
+    if (node == null) {
         return createNode(key);
     }
     if (key < node.key) {
         node.left = insert(node.left, key);
     } else if (key > node.key) {
         node.right = insert(node.right, key);
+    } else {
+        return node;
     }
-    node.height = max(getHeight(node.right), getHeight(node.left)) + 1;
+
+    node.height = max(getHeight(node.left), getHeight(node.right)) + 1;
     const balanceFactor = getBalanceFactor(node);
+
     if (balanceFactor > 1 && key < node.left.key) {
         return rightRotate(node);
     }
@@ -86,11 +89,12 @@ const insert = (node, key) => {
     }
     return node;
 }
-const preOrder = (node) => {
-    if (node != null) {
-        console.log(node.key);
-        preOrder(node.left);
-        preOrder(node.right);
+
+const preOrder = (root) => {
+    if (root != null) {
+        console.log(root.key);
+        preOrder(root.left);
+        preOrder(root.right);
     }
 }
 
